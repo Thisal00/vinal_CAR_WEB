@@ -249,8 +249,34 @@ $stmt->close();
   </ul>
 </nav>
 <?php endif; ?>
-
 </main>
 
 
-//futter add bro this   unedrer 
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="#" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Services</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+ 
+
+
+
+
