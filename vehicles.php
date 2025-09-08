@@ -225,3 +225,32 @@ while ($row=$res->fetch_assoc()) {
 $stmt->close();
 ?>
 </div>
+<!-- Pagination -->
+<?php if ($totalPages > 1): ?>
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+    <li class="page-item <?= ($page<=1)?'disabled':'' ?>">
+      <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$page-1])); ?>">&laquo;</a>
+    </li>
+    <?php
+    $range = 2; // how many pages to show around current
+    for ($i = max(1,$page-$range); $i <= min($totalPages,$page+$range); $i++): ?>
+      <li class="page-item <?= ($i==$page)?'active':'' ?>">
+        <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$i])); ?>"><?php echo $i; ?></a>
+      </li>
+    <?php endfor; ?>
+    <?php if ($page+$range < $totalPages): ?>
+      <li class="page-item disabled"><span class="page-link">...</span></li>
+      <li class="page-item"><a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$totalPages])); ?>"><?php echo $totalPages; ?></a></li>
+    <?php endif; ?>
+    <li class="page-item <?= ($page>=$totalPages)?'disabled':'' ?>">
+      <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$page+1])); ?>">&raquo;</a>
+    </li>
+  </ul>
+</nav>
+<?php endif; ?>
+
+</main>
+
+
+//futter add bro this   unedrer 
