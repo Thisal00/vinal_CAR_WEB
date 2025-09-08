@@ -97,3 +97,105 @@
 </head>
 <body>
 
+
+  
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+   <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
+      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
+      <li class="nav-item"><a class="nav-link" href="reviews.php">Reviews</a></li>
+      <li class="nav-item"><a class="nav-link active" href="about.php">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+      
+      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section with Video -->
+<section class="hero">
+  <video autoplay muted loop>
+    <source src="assets/videos/cars.mp4" type="video/mp4">
+  </video>
+  <div>
+    <h1>About Vinal Auto</h1>
+    <p>Trusted Auto Marketplace in Sri Lanka</p>
+  </div>
+</section>
+
+<!-- About Content -->
+<main class="container">
+  <h2 class="mb-3">Who We Are</h2>
+  <p>We are a Sri Lankan auto marketplace helping you buy and sell vehicles with confidence.</p>
+  <p>Our mission is to connect buyers with quality vehicles at fair prices.</p>
+</main>
+
+<!-- Counters -->
+<section class="counters">
+  <div class="counter-box">
+    <h2 id="vehicles-sold">0</h2>
+    <p>Vehicles Sold</p>
+  </div>
+  <div class="counter-box">
+    <h2 id="experience">0</h2>
+    <p>Years of Experience</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="index.php" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
+      </div>
+      <!-- Newsletter -->
+      <div class="col-md-4 mb-4">
+        <h5>Newsletter</h5>
+        <p>Get the latest deals straight to your inbox.</p>
+        <form>
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Your email" required>
+            <div class="input-group-append">
+              <button class="btn btn-warning" type="submit">Subscribe</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1)">
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="#" class="footer-link d-inline">Privacy Policy</a>
+        <a href="#" class="footer-link d-inline">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
