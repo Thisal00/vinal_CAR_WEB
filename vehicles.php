@@ -1,4 +1,5 @@
-<?php require_once __DIR__.'/db.php'; ?>
+
+      <?php require_once __DIR__.'/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,7 +142,6 @@ footer a:hover { color: #fff; text-decoration: none; }
   </div>
 </nav>
 
-
 <!-- Main -->
 <main class="container" style="margin-top:100px; max-width:1200px;">
 <h2>Vehicles</h2>
@@ -225,6 +225,7 @@ while ($row=$res->fetch_assoc()) {
 $stmt->close();
 ?>
 </div>
+
 <!-- Pagination -->
 <?php if ($totalPages > 1): ?>
 <nav aria-label="Page navigation" class="mt-4">
@@ -249,9 +250,8 @@ $stmt->close();
   </ul>
 </nav>
 <?php endif; ?>
+
 </main>
-
-
 
 <!-- Footer -->
 <footer>
@@ -275,9 +275,6 @@ $stmt->close();
         <a href="#" class="footer-link">Services</a>
         <a href="#" class="footer-link">Contact</a>
       </div>
-
-
-      
       <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
@@ -321,8 +318,4 @@ $stmt->close();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
- 
-
-
-
 
