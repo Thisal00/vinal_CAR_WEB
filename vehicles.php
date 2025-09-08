@@ -141,9 +141,5 @@ footer a:hover { color: #fff; text-decoration: none; }
   </div>
 </nav>
 
-<!-- Main -->
-<main class="container" style="margin-top:100px; max-width:1200px;">
-<h2>Vehicles</h2>
-awy-sfcw-pzw
 
 
