@@ -198,4 +198,35 @@
     </div>
   </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Counter Animation
+  function animateCounter(id, target, duration) {
+    const el = document.getElementById(id);
+    let start = 0;
+    const step = target / (duration / 50);
+    const counter = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        start = target;
+        clearInterval(counter);
+      }
+      el.textContent = Math.floor(start) + (id === 'vehicles-sold' ? '+' : '');
+    }, 50);
+  }
+
+  let started = false;
+  window.addEventListener('scroll', () => {
+    const counters = document.querySelector('.counters');
+    const rect = counters.getBoundingClientRect();
+    if (!started && rect.top < window.innerHeight) {
+      animateCounter('vehicles-sold', 10000, 2000);
+      animateCounter('experience', 5, 2000);
+      started = true;
+    }
+  });
+</script>
+</body>
+</html>
 
