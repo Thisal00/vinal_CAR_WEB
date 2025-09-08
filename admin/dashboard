@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="flex-between">
+      <h2>Admin Dashboard</h2>
+      <div>
+        Welcome, <?= e($_SESSION['username'] ?? '') ?> | 
+        <a class="btn" href="logout.php">Logout</a>
+      </div>
+    </header>
 
+    <nav class="nav-links">
+      <a href="vehicles.php">Vehicles</a>
+      <li><a href="parts.php">Parts</a></li>
+      <li><a href="part_messages.php">Orders</a></li>
+      <li><a href="users.php">Users</a></li>
+      <li><a href="messages.php">Messages</a></li>
+      <li><a href="reviews.php">Reviews</a></li>
+      <li><a href="bookings.php">Settings</a></li>
+    </nav>
+
+    <!-- Dashboard Cards -->
+    <section class="grid">
+      <?php foreach ($counts as $label => $count): ?>
+        <div class="card">
+          <h3><?= ucfirst($label) ?></h3>
+          <p><?= (int)$count ?> total</p>
+        </div>
+      <?php endforeach; ?>
+    </section>
+
+    <!-- Charts -->
+    <section style="margin-top:30px; display:flex; gap:40px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:300px;">
+        <h3>Monthly Orders (<?= date("Y") ?>)</h3>
+        <canvas id="ordersChart"></canvas>
+      </div>
+
+      <div style="flex:1; min-width:300px;">
+        <h3>Last 7 Days Orders</h3>
+        <canvas id="weeklyChart"></canvas>
+      </div>
+    </section>
