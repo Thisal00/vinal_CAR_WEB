@@ -101,3 +101,105 @@ footer h5 { color: var(--brand-gold); }
     </ul>
   </div>
 </nav>
+<!-- Vehicle Details -->
+<div class="container">
+  <div class="vehicle-card" id="vehicleCard">
+    <h2><?= htmlspecialchars($vehicle['year'].' '.$vehicle['make'].' '.$vehicle['model']) ?></h2>
+
+ php add karapan 
+
+    <div class="muted">Price: LKR <?= number_format($vehicle['price'], 2) ?></div>
+    <div class="muted">Fuel: <?= htmlspecialchars($vehicle['fuel']) ?> | Transmission: <?= htmlspecialchars($vehicle['transmission']) ?> | Mileage: <?= number_format($vehicle['mileage']) ?> km</div>
+    <div class="muted">Added: <?= date("d M Y", strtotime($vehicle['created_at'])) ?></div>
+
+    <p><strong>Description:</strong><br><?= nl2br(htmlspecialchars($vehicle['description'])) ?></p>
+
+    <!-- Contact Options -->
+    <div class="mt-3">
+      <a href="https://wa.me/94768291088?text=Hi%20I%27m%20interested%20in%20the%20<?= urlencode($vehicle['make'].' '.$vehicle['model']) ?>" 
+         target="_blank" 
+         class="btn-book mb-2 text-center">
+         💬 Contact on WhatsApp
+      </a>
+
+      <a href="mailto:thisalchathnuka@gmail.com?subject=Interested%20in%20<?= urlencode($vehicle['make'].' '.$vehicle['model']) ?>" 
+         class="btn-book text-center">
+         📧 Contact via Email
+      </a>
+    </div>
+
+    <br><a href="/vinal_auto/vehicles.php" class="btn btn-secondary mt-3">← Back to Vehicles</a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="#" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Services</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+      <!-- Newsletter -->
+      <div class="col-md-4 mb-4">
+        <h5>Newsletter</h5>
+        <p>Get the latest deals straight to your inbox.</p>
+        <form id="newsletterForm" method="POST">
+          <div class="input-group">
+            <input type="email"
+                   name="newsletter_email"
+                   class="form-control"
+                   placeholder="Your email"
+                   required>
+            <div class="input-group-append">
+              <button class="btn btn-warning" type="submit">Subscribe</button>
+            </div>
+          </div>
+          <?php if (!empty($newsletter_msg)): ?>
+            <small class="form-text text-light mt-2">
+              <?= htmlspecialchars($newsletter_msg) ?>
+            </small>
+          <?php endif; ?>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1)">
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="#" class="footer-link d-inline">Privacy Policy</a>
+        <a href="#" class="footer-link d-inline">Terms of Use</a>
+        <a href="#" class="footer-link d-inline">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Animate vehicle card on load
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("vehicleCard").classList.add("show");
+});
+</script>
+</body>
+</html>
