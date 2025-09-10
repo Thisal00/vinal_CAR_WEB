@@ -170,4 +170,158 @@
   </style>
 </head>
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
+      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
+      <li class="nav-item"><a class="nav-link active" href="reviews.php">Reviews</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container" style="margin-top:90px; max-width:900px;">
+  <h2>Customer Reviews</h2>
+
+  <div class="reviews">
+    <?php
+      $sql = "SELECT name, rating, comment, created_at FROM reviews WHERE status='approved' ORDER BY id DESC";
+      if ($res = $mysqli->query($sql)) {
+        $delay = 0;
+        while ($r = $res->fetch_assoc()) {
+          $rating = (int)$r['rating'];
+          echo '<div class="review-card" style="animation-delay: '.$delay.'s">';
+          echo '  <div class="review-head"><strong>'.htmlspecialchars($r['name']).'</strong><span class="stars">';
+          
+          // Star system
+          for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) echo '<i class="fas fa-star"></i>';
+              else echo '<i class="far fa-star"></i>';
+          }
+
+          echo '</span></div>';
+          echo '  <p>'.htmlspecialchars($r['comment']).'</p>';
+          echo '  <div class="muted">'.htmlspecialchars($r['created_at']).'</div>';
+          echo '</div>';
+          $delay += 0.1;
+        }
+      }
+    ?>
+  </div>
+
+  <hr>
+  <h3>Leave a review</h3>
+  <?php
+  $msg = '';
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $name = trim($_POST['name'] ?? '');
+      $rating = (int)($_POST['rating'] ?? 0);
+      $comment = trim($_POST['comment'] ?? '');
+      if ($name && $rating >=1 && $rating <=5 && $comment) {
+          $stmt = $mysqli->prepare("INSERT INTO reviews (vehicle_id, name, rating, comment, status) VALUES (NULL,?,?,?, 'pending')");
+          $stmt->bind_param('sis', $name, $rating, $comment);
+          $stmt->execute();
+          $stmt->close();
+          $msg = "✅ Thanks! Your review is submitted for approval.";
+      } else {
+          $msg = "⚠️ Please fill all fields correctly.";
+      }
+  }
+  if ($msg) { echo '<div class="alert">'.$msg.'</div>'; }
+  ?>
+
+  <form method="post" class="card form" id="reviewForm">
+    <input type="text" name="name" placeholder="Your name" required>
+
+    <div class="star-rating mb-3">
+      <i class="far fa-star" data-value="1"></i>
+      <i class="far fa-star" data-value="2"></i>
+      <i class="far fa-star" data-value="3"></i>
+      <i class="far fa-star" data-value="4"></i>
+      <i class="far fa-star" data-value="5"></i>
+    </div>
+    <input type="hidden" name="rating" id="ratingInput" required>
+
+    <textarea name="comment" placeholder="Your review" required></textarea>
+    <button class="btn">Submit</button>
+  </form>
+
+  <!-- Social Links -->
+  <div class="social-links mt-4 text-center">
+    <a href="https://facebook.com/YourPage" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://instagram.com/YourPage" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@YourPage" target="_blank"><i class="fab fa-tiktok"></i></a>
+    <a href="mailto:info@vinalauto.lk"><i class="fas fa-envelope"></i></a>
+  </div>
+</main>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/94771234567" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="#" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Services</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+      <!-- Newsletter -->
+      <div class="col-md-4 mb-4">
+        <h5>Newsletter</h5>
+        <p>Get the latest deals straight to your inbox.</p>
+        <form id="newsletterForm" method="POST">
+          <div class="input-group">
+            <input type="email" name="newsletter_email" class="form-control" placeholder="Your email" required>
+            <div class="input-group-append">
+              <button class="btn btn-warning" type="submit">Subscribe</button>
+            </div>
+          </div>
+          <?php if (!empty($newsletter_msg)): ?>
+            <small class="form-text text-light mt-2"><?= htmlspecialchars($newsletter_msg) ?></small>
+          <?php endif; ?>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1)">
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="#" class="footer-link d-inline">Privacy Policy</a>
+        <a href="#" class="footer-link d-inline">Terms of Use</a>
+        <a href="#" class="footer-link d-inline">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
 
