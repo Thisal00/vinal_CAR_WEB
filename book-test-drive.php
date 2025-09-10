@@ -147,3 +147,91 @@
     </ul>
   </div>
 </nav>
+  <h2> Book  a test Drive </h2>
+<?php
+if (!empty($_GET['msg'])) {
+  echo '<div class="alert">'.htmlspecialchars($_GET['msg']).'</div>';
+}
+$vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
+?>
+
+<form action="submit-booking.php" method="POST" class="form-card">
+  <input type="hidden" name="vehicle_id" value="<?= $vehicle_id ?>">
+
+  <label>Your Name:</label>
+  <input type="text" name="name" required>
+
+  <label>Email Address:</label>
+  <input type="email" name="email" required>
+
+  <label>Phone Number:</label>
+  <input type="tel" name="phone" pattern="07[0-9]{8}" required>
+
+  <label>Date:</label>
+  <input type="date" name="date" min="<?= date('Y-m-d') ?>" required>
+
+  <label>Time:</label>
+  <input type="time" name="time" required>
+
+  <button type="submit">Book Test Drive</button>
+</form>
+
+<!-- Social Links -->
+<div class="social-links text-center mb-4">
+  <a href="https://facebook.com/YourPage" target="_blank"><i class="fab fa-facebook"></i></a>
+  <a href="https://instagram.com/YourPage" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="https://www.tiktok.com/@YourPage" target="_blank"><i class="fab fa-tiktok"></i></a>
+  <a href="mailto:info@vinalauto.lk"><i class="fas fa-envelope"></i></a>
+</div>
+
+<!-- WhatsApp Button -->
+<a href="https://wa.me/94771234567" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="#" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Services</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Newsletter</h5>
+        <p>Get the latest deals straight to your inbox.</p>
+        <form id="newsletterForm" method="POST">
+          <div class="input-group">
+            <input type="email" name="newsletter_email" class="form-control" placeholder="Your email" required>
+            <div class="input-group-append">
+              <button class="btn btn-warning" type="submit">Subscribe</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1)">
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-0">&copy; <?= date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="#" class="footer-link d-inline">Privacy Policy</a>
+        <a href="#" class="footer-link d-inline">Terms of Use</a>
+        <a href="#" class="footer-link d-inline">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
