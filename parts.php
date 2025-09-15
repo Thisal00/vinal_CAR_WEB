@@ -1,3 +1,17 @@
+<?php
+require_once __DIR__.'/db.php';
+
+// Search logic
+$where = '';
+$q = $_GET['q'] ?? '';
+if (!empty($q)) {
+  $safe_q = mysqli_real_escape_string($conn, $q);
+  $where = "WHERE part_name LIKE '%$safe_q%'";
+}
+
+// Fetch parts
+$result = mysqli_query($conn, "SELECT * FROM vehicle_parts $where ORDER BY id DESC");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
