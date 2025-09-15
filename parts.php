@@ -168,3 +168,65 @@
     ?>
   </div>
 </main>
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>
+          123 Car Street, Colombo<br>
+          Phone: +94 77 123 4567<br>
+          Email: info@vinalauto.lk
+        </p>
+      </div>
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <a href="#" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="#" class="footer-link">About</a>
+        <a href="#" class="footer-link">Services</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+      <!-- Newsletter -->
+      <div class="col-md-4 mb-4">
+        <h5>Newsletter</h5>
+        <p>Get the latest deals straight to your inbox.</p>
+        <form id="newsletterForm" method="POST">
+          <div class="input-group">
+            <input type="email"
+                   name="newsletter_email"
+                   class="form-control"
+                   placeholder="Your email"
+                   required>
+            <div class="input-group-append">
+              <button class="btn btn-warning" type="submit">Subscribe</button>
+            </div>
+          </div>
+          <?php if (!empty($newsletter_msg)): ?>
+            <small class="form-text text-light mt-2">
+              <?= htmlspecialchars($newsletter_msg) ?>
+            </small>
+          <?php endif; ?>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.1)">
+
+    <div class="row">
+      <div class="col-md-6">
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="#" class="footer-link d-inline">Privacy Policy</a>
+        <a href="#" class="footer-link d-inline">Terms of Use</a>
+        <a href="#" class="footer-link d-inline">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
