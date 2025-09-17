@@ -18,7 +18,7 @@ if ($mysqli->connect_errno) {
 }
 $mysqli->set_charset('utf8mb4');
 
-// ✅ alias for older files
+// alias for older files
 $conn = $mysqli;
 
 // ---- Helper functions ----
