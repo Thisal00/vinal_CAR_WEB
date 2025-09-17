@@ -41,7 +41,7 @@ $stmt->bind_param("sssis", $name, $email, $phone, $vehicle_id, $datetime);
 
 if ($stmt->execute()) {
   ?>
-  <!-- ✅ Customer Confirmation Email -->
+  <!--Customer Confirmation Email -->
   <form id="customerMail" method="POST" action="https://formsubmit.co/<?= htmlspecialchars($email) ?>">
     <input type="hidden" name="_subject" value="📌 Test Drive Booking Received - Vinal Auto">
     <input type="hidden" name="message" value="Hello <?= htmlspecialchars($name) ?>,
@@ -58,7 +58,7 @@ Thanks,
 Vinal Auto Team">
   </form>
 
-  <!-- ✅ Admin Notification Email -->
+  <!--Admin Notification Email -->
   <form id="adminMail" method="POST" action="https://formsubmit.co/thisalchathnuka@gmail.com">
     <input type="hidden" name="_subject" value="📢 New Test Drive Booking - Vinal Auto">
     <input type="hidden" name="message" value="New booking request received:
@@ -81,7 +81,7 @@ Please log in to the admin panel to confirm.">
     }, 2000); // 2-second gap to ensure both are sent
   </script>
 
-  <!-- ✅ Thank You Message -->
+  <!-- Thank You Message -->
   <div style="text-align:center; margin-top:50px;">
     <h2>🎉 Thank you, <?= htmlspecialchars($name) ?>!</h2>
     <p>Your test drive booking has been successfully submitted.</p>
@@ -97,3 +97,4 @@ Please log in to the admin panel to confirm.">
 $stmt->close();
 $conn->close();
 ?>
+
