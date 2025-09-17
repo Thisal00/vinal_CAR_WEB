@@ -83,11 +83,11 @@ if (!isset($_SESSION['menu'])) {
             break;
         case "2":
             $_SESSION['menu'] = "financial";
-            echo "💰 Financial Menu:\na2️⃣ Financial Advice\nb2️⃣ Banks & Loan Details\nc2️⃣ Insurance Advice\n\nType option (e.g., a2) or 00/99 for Main Menu:";
+            echo " Financial Menu:\na2️⃣ Financial Advice\nb2️⃣ Banks & Loan Details\nc2️⃣ Insurance Advice\n\nType option (e.g., a2) or 00/99 for Main Menu:";
             break;
         case "3":
             $_SESSION['menu'] = "add_salary";
-            echo "💼 Add Salary (Estimate Vehicle):\nType your monthly salary (LKR, numbers only, e.g., 100000) or 00/99 for Main Menu:";
+            echo "Add Salary (Estimate Vehicle):\nType your monthly salary (LKR, numbers only, e.g., 100000) or 00/99 for Main Menu:";
             break;
         case "4":
             $_SESSION['menu'] = "contact";
@@ -95,7 +95,7 @@ if (!isset($_SESSION['menu'])) {
             break;
         case "5":
             $_SESSION['menu'] = "brandnew";
-            echo "🏷️ Brand New Car Booking:\na5️⃣ Booking Steps\nb5️⃣ View Available Models\n\nType option (e.g., a5) or 00/99 for Main Menu:";
+            echo " Brand New Car Booking:\na5️⃣ Booking Steps\nb5️⃣ View Available Models\n\nType option (e.g., a5) or 00/99 for Main Menu:";
             break;
         default:
             echo "👋 Welcome to Vinal Auto! Choose:\n1️⃣ Vehicles\n2️⃣ Financial\n3️⃣ Add Salary (Estimate Vehicle)\n4️⃣ Contact Us\n5️⃣ Brand New Car Booking\n\nType option (e.g., 1):";
@@ -123,11 +123,11 @@ switch ($_SESSION['menu']) {
 
     case "financial":
         if ($query === "a2") {
-            echo "💡 Financial Advice (2025):\n- Budget: Car costs <30% monthly income.\n- EMI: ≤40% take-home pay.\n- Down payment: 20-30% reduces interest.\n- Fuel: Hybrids save (fuel ~LKR 400/l).\n- Compare dealers vs. imports.\n\nType b2 (Loans), c2 (Insurance) or 00/99 Main Menu:";
+            echo "Financial Advice (2025):\n- Budget: Car costs <30% monthly income.\n- EMI: ≤40% take-home pay.\n- Down payment: 20-30% reduces interest.\n- Fuel: Hybrids save (fuel ~LKR 400/l).\n- Compare dealers vs. imports.\n\nType b2 (Loans), c2 (Insurance) or 00/99 Main Menu:";
         } elseif ($query === "b2") {
-            echo "🏦 Loans (2025):\n- Rates: 12-14% p.a.\n- Tenure: 5-8 yrs.\n- Loan: 70-80% vehicle value.\n- Needs: NIC, income proof.\n\nBanks:\n- People's: +94 11 220 6789 (12.5-14%)\n- Sampath: +94 11 230 3040 (~12%)\n- HNB: +94 11 266 4664 (12-13%)\n\nType 'loan {salary} {down_payment}' (e.g., loan 100000 500000) or 00/99 Main Menu:";
+            echo "Loans (2025):\n- Rates: 12-14% p.a.\n- Tenure: 5-8 yrs.\n- Loan: 70-80% vehicle value.\n- Needs: NIC, income proof.\n\nBanks:\n- People's: +94 11 220 6789 (12.5-14%)\n- Sampath: +94 11 230 3040 (~12%)\n- HNB: +94 11 266 4664 (12-13%)\n\nType 'loan {salary} {down_payment}' (e.g., loan 100000 500000) or 00/99 Main Menu:";
         } elseif ($query === "c2") {
-            echo "🛡️ Insurance (2025):\n- Third-party: ~LKR 20,000/yr (mandatory).\n- Comprehensive: 1-3% vehicle value (LKR 60,000-150,000 for 6-10M).\n- Companies: Ceylinco, Allianz, Fairfirst.\n- Tips: Compare quotes, no-claim bonuses.\n\nType a2 (Advice), b2 (Loans) or 00/99 Main Menu:";
+            echo " Insurance (2025):\n- Third-party: ~LKR 20,000/yr (mandatory).\n- Comprehensive: 1-3% vehicle value (LKR 60,000-150,000 for 6-10M).\n- Companies: Ceylinco, Allianz, Fairfirst.\n- Tips: Compare quotes, no-claim bonuses.\n\nType a2 (Advice), b2 (Loans) or 00/99 Main Menu:";
         } elseif (preg_match('/^loan\s+(\d+)(?:\s+(\d+))?$/i', $query, $m)) {
             $monthlySalary = (int)$m[1];
             $down = isset($m[2]) ? (int)$m[2] : 0;
@@ -135,7 +135,7 @@ switch ($_SESSION['menu']) {
             $r = 0.13 / 12; $n = 60;
             $maxLoan = $r > 0 ? $monthlyLimit * (1 - pow(1 + $r, -$n)) / $r : $monthlyLimit * $n;
             $maxLoan = max(0, round($maxLoan)) + $down;
-            echo "🔎 Loan Estimate (Salary: LKR " . e(number_format($monthlySalary)) . "/mo, Down: LKR " . e(number_format($down)) . "):\n- Safe EMI: LKR " . e(number_format(round($monthlyLimit))) . "\n- Max price (5 yrs @13%): LKR " . e(number_format($maxLoan)) . "\n- Rates vary (12-14%). Contact banks.\n\nType a2, b2, c2 or 00/99 Main Menu:";
+            echo "Loan Estimate (Salary: LKR " . e(number_format($monthlySalary)) . "/mo, Down: LKR " . e(number_format($down)) . "):\n- Safe EMI: LKR " . e(number_format(round($monthlyLimit))) . "\n- Max price (5 yrs @13%): LKR " . e(number_format($maxLoan)) . "\n- Rates vary (12-14%). Contact banks.\n\nType a2, b2, c2 or 00/99 Main Menu:";
         } else {
             echo "❌ Invalid option.\nChoose: a2️⃣ Advice, b2️⃣ Loans, c2️⃣ Insurance\n(00/99 Main Menu)";
         }
@@ -197,4 +197,5 @@ switch ($_SESSION['menu']) {
         unset($_SESSION['menu']);
         echo "ℹ️ Session reset.\n\n1️⃣ Vehicles\n2️⃣ Financial\n3️⃣ Add Salary\n4️⃣ Contact Us\n5️⃣ Brand New Car Booking\n\nType option (e.g., 1):";
 }
+
 ?>
