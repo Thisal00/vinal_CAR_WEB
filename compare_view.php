@@ -194,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </script>
 
     <?php
-    // ✅ Smart Summary
+    //Smart Summary
     $summary = "<div class='summary-box smart-summary'>";
     $summary .= "<h5 class='text-info fw-bold'> Smart Assistant Insights</h5>";
 
@@ -250,3 +250,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </script>
 </body>
 </html>
+
