@@ -12,13 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['otp_verified'])) {
     $stmt->bind_param("ss", $new_pass, $email);
     $stmt->execute();
 
-    $msg = "✅ Password updated successfully! Redirecting to login page...";
-    
-    // Auto redirect after 3 seconds
-    echo "<script>
-            setTimeout(() => { window.location.href = 'login.php'; }, 3000);
-          </script>";
-
+    $msg = "✅ Password updated successfully! <a href='login.php'>Login</a>";
     session_destroy();
 }
 ?>
@@ -35,9 +29,7 @@ input:focus { border:2px solid #007bff; box-shadow:0 0 8px rgba(0,123,255,0.3); 
 button { position:relative; overflow:hidden; transition:0.3s; }
 button:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.15); }
 button:active::after { content:""; position:absolute; width:100%; height:100%; background:rgba(255,255,255,0.2); top:0; left:0; border-radius:inherit; animation:ripple 0.4s; }
-.alert { opacity:0; animation:fadeIn 0.8s forwards; margin-bottom:10px; padding:8px; border-radius:5px; }
-.alert-success { background:#d4edda; color:#155724; }
-.alert-error { background:#f8d7da; color:#721c24; }
+.alert { opacity:0; animation:fadeIn 0.8s forwards; margin-bottom:10px; }
 @keyframes fadeIn { to { opacity:1; } }
 @keyframes ripple { from { transform:scale(0); opacity:1; } to { transform:scale(2); opacity:0; } }
 </style>
@@ -47,20 +39,18 @@ button:active::after { content:""; position:absolute; width:100%; height:100%; b
 <h3 class="text-center mb-3">Reset Password</h3>
 
 <?php if(!empty($msg)): ?>
-<div class="alert alert-success">
-    <?php echo $msg; ?>
+<div class="alert" style="padding:8px; background:#d4edda; color:#155724;">
+<?php echo $msg; ?>
 </div>
 <?php endif; ?>
 
 <?php if(isset($_SESSION['otp_verified'])): ?>
 <form method="post" class="d-flex flex-column gap-2">
-    <input type="password" name="new_pass" class="form-control" placeholder="New Password" required>
-    <button class="btn btn-primary">Update Password</button>
+<input type="password" name="new_pass" class="form-control" placeholder="New Password" required>
+<button class="btn btn-primary">Update Password</button>
 </form>
 <?php else: ?>
-<div class="alert alert-error">
-    ❌ Session expired or unauthorized access. <a href="forgot.php">Request OTP again</a>
-</div>
+<p style="color:red;">❌ Session expired or unauthorized access. <a href="forgot.php">Request OTP again</a></p>
 <?php endif; ?>
 
 </main>
