@@ -1,5 +1,4 @@
-
-      <?php require_once __DIR__.'/db.php'; ?>
+<?php require_once __DIR__.'/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +16,7 @@
   --brand-gold: #ffd700;
   --brand-blue: #2196f3;
   --panel: #11182e;
-  --text: #f4f4f4;
+  --text: #fff;
 }
 
 body {
@@ -62,35 +61,62 @@ form.filters .btn:hover { background-color: #fff176; }
   gap: 20px;
 }
 
-.card {
-  background-color: var(--panel);
+/* Strong card colors to prevent navbar interference */
+.vehicle-card {
+  background-color: var(--panel) !important;
+  color: var(--text) !important;
   border-radius: 12px;
   border: 1px solid #2c3e50;
   overflow: hidden;
-  transition: 0.3s;
   display: flex;
   flex-direction: column;
+  transition: 0.3s;
 }
 
-.card:hover {
+.vehicle-card:hover {
   box-shadow: 0 6px 16px rgba(255,255,255,0.15);
   transform: translateY(-5px);
 }
 
-.card img {
+.vehicle-card img {
   width: 100%;
   height: 220px;
   object-fit: cover;
 }
 
-.card .p-2 { padding: 12px; flex-grow: 1; }
-.card h4 { margin: 8px 0; color: var(--brand-gold); font-size: 18px; }
-.card .muted { color: #ccc; font-size: 14px; margin-bottom: 5px; }
-.card p { font-size: 13px; color: #e0e0e0; flex-grow: 1; }
+.vehicle-card .p-2 {
+  padding: 12px;
+  flex-grow: 1;
+}
 
-.card .btn-view {
-  background-color: var(--brand-blue);
-  color: #fff;
+.vehicle-card h4 {
+  margin: 8px 0;
+  color: var(--brand-gold) !important;
+  font-size: 18px;
+}
+
+.vehicle-card .muted {
+  color: #ccc !important;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Short description */
+.vehicle-card p {
+  font-size: 13px;
+  color: #e0e0e0 !important;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Button inside card */
+.vehicle-card .btn-view {
+  background-color: var(--brand-blue) !important;
+  color: #fff !important;
   border: none;
   width: calc(100% - 24px);
   margin: 0 12px 12px 12px;
@@ -102,10 +128,15 @@ form.filters .btn:hover { background-color: #fff176; }
   text-decoration: none;
   transition: 0.3s;
 }
-.card .btn-view:hover {
-  background-color: #1976d2;
-  color: #fff;
+.vehicle-card .btn-view:hover {
+  background-color: #1976d2 !important;
+  color: #fff !important;
   text-decoration: none;
+}
+
+/* Prevent navbar active inheritance */
+body .active {
+  color: inherit !important;
 }
 
 /* Footer */
@@ -119,28 +150,13 @@ footer h5 { color: var(--brand-gold); margin-bottom: 15px; }
 footer p, footer a { color: #bbb; font-size: 14px; }
 footer a:hover { color: #fff; text-decoration: none; }
 .footer-link { display: block; margin-bottom: 5px; }
+
 </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(0,0,0,0.9);">
-  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link active" href="vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link" href="reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
-    </ul>
-  </div>
-</nav>
+<?php include 'a_nav.php'; ?> 
 
 <!-- Main -->
 <main class="container" style="margin-top:100px; max-width:1200px;">
@@ -188,8 +204,7 @@ if (!empty($_GET['year_max'])) { $where[]="year <= ?"; $params[]=$_GET['year_max
 if (!empty($_GET['fuel'])) { $where[]="fuel = ?"; $params[]=$_GET['fuel']; $types.='s'; }
 if (!empty($_GET['transmission'])) { $where[]="transmission = ?"; $params[]=$_GET['transmission']; $types.='s'; }
 
-# --- Pagination setup ---
-$limit = 9; // vehicles per page
+$limit = 9;
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $offset = ($page - 1) * $limit;
 
@@ -211,7 +226,7 @@ if ($params) { $stmt->bind_param($types, ...$params); }
 $stmt->execute(); $res=$stmt->get_result();
 while ($row=$res->fetch_assoc()) {
   $img = $row['image'] ? 'assets/images/uploads/'.e($row['image']) : 'assets/images/no-car.png';
-  echo '<div class="card">';
+  echo '<div class="card vehicle-card">';
   echo '  <img src="'.e($img).'" alt="Vehicle">';
   echo '  <div class="p-2">';
   echo '    <h4>'.e($row['year']).' '.e($row['make']).' '.e($row['model']).'</h4>';
@@ -234,7 +249,7 @@ $stmt->close();
       <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$page-1])); ?>">&laquo;</a>
     </li>
     <?php
-    $range = 2; // how many pages to show around current
+    $range = 2;
     for ($i = max(1,$page-$range); $i <= min($totalPages,$page+$range); $i++): ?>
       <li class="page-item <?= ($i==$page)?'active':'' ?>">
         <a class="page-link" href="?<?php echo http_build_query(array_merge($_GET,['page'=>$i])); ?>"><?php echo $i; ?></a>
@@ -257,7 +272,6 @@ $stmt->close();
 <footer>
   <div class="container">
     <div class="row">
-      <!-- Contact -->
       <div class="col-md-4 mb-4">
         <h5>Contact Us</h5>
         <p>
@@ -266,56 +280,26 @@ $stmt->close();
           Email: info@vinalauto.lk
         </p>
       </div>
-      <!-- Quick Links -->
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
-        <a href="#" class="footer-link">Home</a>
+        <a href="index.php" class="footer-link">Home</a>
         <a href="vehicles.php" class="footer-link">Vehicles</a>
-        <a href="#" class="footer-link">About</a>
-        <a href="#" class="footer-link">Services</a>
-        <a href="#" class="footer-link">Contact</a>
+        <a href="parts.php" class="footer-link">Parts</a>
+        <a href="book-test-drive.php" class="footer-link">Booking</a>
+        <a href="reviews.php" class="footer-link">Reviews</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
       </div>
-      <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
         <p>Get the latest deals straight to your inbox.</p>
-        <form id="newsletterForm" method="POST">
-          <div class="input-group">
-            <input type="email"
-                   name="newsletter_email"
-                   class="form-control"
-                   placeholder="Your email"
-                   required>
-            <div class="input-group-append">
-              <button class="btn btn-warning" type="submit">Subscribe</button>
-            </div>
-          </div>
-          <?php if (!empty($newsletter_msg)): ?>
-            <small class="form-text text-light mt-2">
-              <?= htmlspecialchars($newsletter_msg) ?>
-            </small>
-          <?php endif; ?>
-        </form>
-      </div>
-    </div>
-
-    <hr style="border-color: rgba(255,255,255,0.1)">
-
-    <div class="row">
-      <div class="col-md-6">
-        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
-      </div>
-      <div class="col-md-6 text-right">
-        <a href="#" class="footer-link d-inline">Privacy Policy</a>
-        <a href="#" class="footer-link d-inline">Terms of Use</a>
-        <a href="#" class="footer-link d-inline">Sitemap</a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

@@ -1,3 +1,9 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include __DIR__ . '/db.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,13 +39,6 @@
       text-align: center;
       margin-bottom: 30px;
     }
-
-    /* Navbar */
-    .navbar { background: rgba(0,0,0,0.85); transition: background 0.3s; }
-    .navbar.scrolled { background: var(--panel) !important; }
-    .navbar-nav .nav-link { color: #fff !important; font-weight: 500; }
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active { color: var(--brand-gold) !important; }
 
     /* Form Card */
     .form-card {
@@ -93,16 +92,7 @@
       text-align: center;
     }
 
-    /* Footer */
-    footer {
-      background: #101010;
-      padding: 30px 0;
-      color: #aaa;
-    }
-    footer h5 { color: var(--brand-gold); }
-    .footer-link { display: block; color: #bbb; margin-bottom: 6px; text-decoration: none; }
-    .footer-link:hover { color: #fff; }
-    .social-links a {
+     .social-links a {
       color: var(--text);
       margin-right: 15px;
       font-size: 1.5rem;
@@ -130,34 +120,18 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link" href="reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
-    </ul>
-  </div>
-</nav>
-  <h2> Book  a test Drive </h2>
+<?php include 'a_nav.php'; ?>
+<br><br><br><br>
+
+<h2>Book a Test Drive</h2>
+
 <?php
 if (!empty($_GET['msg'])) {
   echo '<div class="alert">'.htmlspecialchars($_GET['msg']).'</div>';
 }
-$vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
 ?>
 
 <form action="submit-booking.php" method="POST" class="form-card">
-  <input type="hidden" name="vehicle_id" value="<?= $vehicle_id ?>">
-
   <label>Your Name:</label>
   <input type="text" name="name" required>
 
@@ -166,6 +140,18 @@ $vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
 
   <label>Phone Number:</label>
   <input type="tel" name="phone" pattern="07[0-9]{8}" required>
+
+  <label>Vehicle:</label>
+  <select name="vehicle_id" required>
+    <option value="">-- Select Vehicle --</option>
+    <?php
+    $vehicles = mysqli_query($conn, "SELECT id, make, model FROM vehicles ORDER BY make, model");
+    while ($v = mysqli_fetch_assoc($vehicles)): ?>
+        <option value="<?= $v['id'] ?>">
+            <?= htmlspecialchars($v['make'].' '.$v['model']) ?>
+        </option>
+    <?php endwhile; ?>
+  </select>
 
   <label>Date:</label>
   <input type="date" name="date" min="<?= date('Y-m-d') ?>" required>
@@ -185,12 +171,13 @@ $vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
 </div>
 
 <!-- WhatsApp Button -->
-<a href="https://wa.me/94771234567" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/94768291088" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <!-- Footer -->
 <footer>
   <div class="container">
     <div class="row">
+      <!-- Contact -->
       <div class="col-md-4 mb-4">
         <h5>Contact Us</h5>
         <p>
@@ -199,14 +186,20 @@ $vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
           Email: info@vinalauto.lk
         </p>
       </div>
+
+      <!-- Quick Links -->
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
-        <a href="#" class="footer-link">Home</a>
+        <a href="index.php" class="footer-link">Home</a>
         <a href="vehicles.php" class="footer-link">Vehicles</a>
-        <a href="#" class="footer-link">About</a>
-        <a href="#" class="footer-link">Services</a>
-        <a href="#" class="footer-link">Contact</a>
+        <a href="parts.php" class="footer-link">Parts</a>
+        <a href="book-test-drive.php" class="footer-link">Booking</a>
+        <a href="reviews.php" class="footer-link">Reviews</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
       </div>
+
+      <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
         <p>Get the latest deals straight to your inbox.</p>
@@ -217,6 +210,11 @@ $vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
               <button class="btn btn-warning" type="submit">Subscribe</button>
             </div>
           </div>
+          <?php if (!empty($newsletter_msg)): ?>
+            <small class="form-text text-light mt-2">
+              <?= htmlspecialchars($newsletter_msg) ?>
+            </small>
+          <?php endif; ?>
         </form>
       </div>
     </div>
@@ -225,13 +223,58 @@ $vehicle_id = isset($_GET['vehicle_id']) ? intval($_GET['vehicle_id']) : 1;
 
     <div class="row">
       <div class="col-md-6">
-        <p class="mb-0">&copy; <?= date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
       </div>
-      <div class="col-md-6 text-right">
-        <a href="#" class="footer-link d-inline">Privacy Policy</a>
-        <a href="#" class="footer-link d-inline">Terms of Use</a>
-        <a href="#" class="footer-link d-inline">Sitemap</a>
+      <div class="col-md-6 text-md-right text-left">
+        <a href="https://example.com/privacy-policy" class="footer-link d-inline">Privacy Policy</a>
+        <a href="https://example.com/terms-of-use" class="footer-link d-inline ml-3">Terms of Use</a>
+        <a href="https://example.com/sitemap" class="footer-link d-inline ml-3">Sitemap</a>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Footer Styles -->
+<style>
+footer {
+  background: #010205ff;
+  color: #ddd;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+footer h5 {
+  color: var(--brand-gold);
+  margin-bottom: 15px;
+}
+footer p,
+footer a {
+  color: #bbb;
+  font-size: 14px;
+}
+footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-link {
+  display: block;
+  margin-bottom: 5px;
+}
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Navbar scroll effect
+  $(window).scroll(function(){
+    if($(this).scrollTop() > 50){
+      $('.navbar').addClass('scrolled');
+    } else {
+      $('.navbar').removeClass('scrolled');
+    }
+  });
+</script>
+
+</body>
+</html>

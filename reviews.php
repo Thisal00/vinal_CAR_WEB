@@ -1,3 +1,5 @@
+<?php require_once __DIR__.'/db.php'; ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -27,12 +29,6 @@
 
     h2, h3 { color: var(--brand-gold); }
 
-    /* Navbar */
-    .navbar { background: rgba(0,0,0,0.85); transition: background 0.3s; }
-    .navbar.scrolled { background: var(--panel) !important; }
-    .navbar-nav .nav-link { color: #fff !important; font-weight: 500; transition: color 0.3s; }
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active { color: var(--brand-gold) !important; }
 
     /* Review Cards */
     .review-card {
@@ -170,24 +166,9 @@
   </style>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link active" href="reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
-    </ul>
-  </div>
-</nav>
 
+<!-- Navbar -->
+  <?php include 'a_nav.php'; ?>
 <main class="container" style="margin-top:90px; max-width:900px;">
   <h2>Customer Reviews</h2>
 
@@ -264,8 +245,7 @@
 </main>
 
 <!-- WhatsApp Button -->
-<a href="https://wa.me/94771234567" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
-
+<a href="https://wa.me/94768291088" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i></a>
 <!-- Footer -->
 <footer>
   <div class="container">
@@ -279,28 +259,38 @@
           Email: info@vinalauto.lk
         </p>
       </div>
+
       <!-- Quick Links -->
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
-        <a href="#" class="footer-link">Home</a>
+        <a href="index.php" class="footer-link">Home</a>
         <a href="vehicles.php" class="footer-link">Vehicles</a>
-        <a href="#" class="footer-link">About</a>
-        <a href="#" class="footer-link">Services</a>
-        <a href="#" class="footer-link">Contact</a>
+        <a href="parts.php" class="footer-link">Parts</a>
+        <a href="book-test-drive.php" class="footer-link">Booking</a>
+        <a href="reviews.php" class="footer-link">Reviews</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
       </div>
+
       <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
         <p>Get the latest deals straight to your inbox.</p>
         <form id="newsletterForm" method="POST">
           <div class="input-group">
-            <input type="email" name="newsletter_email" class="form-control" placeholder="Your email" required>
+            <input type="email"
+                   name="newsletter_email"
+                   class="form-control"
+                   placeholder="Your email"
+                   required>
             <div class="input-group-append">
               <button class="btn btn-warning" type="submit">Subscribe</button>
             </div>
           </div>
           <?php if (!empty($newsletter_msg)): ?>
-            <small class="form-text text-light mt-2"><?= htmlspecialchars($newsletter_msg) ?></small>
+            <small class="form-text text-light mt-2">
+              <?= htmlspecialchars($newsletter_msg) ?>
+            </small>
           <?php endif; ?>
         </form>
       </div>
@@ -312,15 +302,86 @@
       <div class="col-md-6">
         <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
       </div>
-      <div class="col-md-6 text-right">
-        <a href="#" class="footer-link d-inline">Privacy Policy</a>
-        <a href="#" class="footer-link d-inline">Terms of Use</a>
-        <a href="#" class="footer-link d-inline">Sitemap</a>
+      <div class="col-md-6 text-md-right text-left">
+        <a href="https://example.com/privacy-policy" class="footer-link d-inline">Privacy Policy</a>
+        <a href="https://example.com/terms-of-use" class="footer-link d-inline ml-3">Terms of Use</a>
+        <a href="https://example.com/sitemap" class="footer-link d-inline ml-3">Sitemap</a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- Footer Styles -->
+<style>
+/* Footer */
+footer {
+  background: #010205ff;
+  color: #ddd;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+footer h5 {
+  color: var(--brand-gold);
+  margin-bottom: 15px;
+}
+footer p,
+footer a {
+  color: #bbb;
+  font-size: 14px;
+}
+footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-link {
+  display: block;
+  margin-bottom: 5px;
+}
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Navbar scroll effect
+  $(window).scroll(function(){
+    if($(this).scrollTop() > 50){
+      $('.navbar').addClass('scrolled');
+    } else {
+      $('.navbar').removeClass('scrolled');
+    }
+  });
+
+  // Interactive star rating for form
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star-rating i');
+    const ratingInput = document.getElementById('ratingInput');
+
+    stars.forEach(star => {
+      star.addEventListener('mouseover', () => {
+        const val = parseInt(star.dataset.value);
+        stars.forEach(s => s.classList.toggle('hovered', parseInt(s.dataset.value) <= val));
+      });
+
+      star.addEventListener('mouseout', () => {
+        stars.forEach(s => s.classList.remove('hovered'));
+      });
+
+      star.addEventListener('click', () => {
+        const val = parseInt(star.dataset.value);
+        ratingInput.value = val;
+        stars.forEach(s => s.classList.toggle('selected', parseInt(s.dataset.value) <= val));
+      });
+    });
+  });
+</script>
 
 </body>
 </html>

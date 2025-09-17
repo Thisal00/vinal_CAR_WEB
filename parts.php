@@ -104,43 +104,12 @@ $result = mysqli_query($conn, "SELECT * FROM vehicle_parts $where ORDER BY id DE
     .email-btn { background: #555; }
     .whatsapp-btn { background: #25D366; }
 
-    footer {
-      background: #101010;
-      padding: 30px 0;
-      color: #aaa;
-      margin-top: 40px;
-    }
-    footer h5 { color: var(--brand-gold); }
-    .footer-link {
-      display: block;
-      color: #bbb;
-      margin-bottom: 6px;
-      text-decoration: none;
-    }
-    .footer-link:hover { color: #fff; }
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <a class="navbar-brand text-warning" href="index.php">Vinal Auto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link active" href="parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link" href="reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
-    </ul>
-  </div>
-</nav>
-
+  <?php include 'a_nav.php'; ?>
 <!-- Main -->
 <main class="container" style="margin-top:90px; max-width:1200px;">
   <h2 class="mb-4">🛠 Available Vehicle Parts</h2>
@@ -182,6 +151,8 @@ $result = mysqli_query($conn, "SELECT * FROM vehicle_parts $where ORDER BY id DE
     ?>
   </div>
 </main>
+
+<!-- Footer -->
 <!-- Footer -->
 <footer>
   <div class="container">
@@ -195,15 +166,19 @@ $result = mysqli_query($conn, "SELECT * FROM vehicle_parts $where ORDER BY id DE
           Email: info@vinalauto.lk
         </p>
       </div>
+
       <!-- Quick Links -->
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
-        <a href="#" class="footer-link">Home</a>
+        <a href="index.php" class="footer-link">Home</a>
         <a href="vehicles.php" class="footer-link">Vehicles</a>
-        <a href="#" class="footer-link">About</a>
-        <a href="#" class="footer-link">Services</a>
-        <a href="#" class="footer-link">Contact</a>
+        <a href="parts.php" class="footer-link">Parts</a>
+        <a href="book-test-drive.php" class="footer-link">Booking</a>
+        <a href="reviews.php" class="footer-link">Reviews</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
       </div>
+
       <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
@@ -234,13 +209,48 @@ $result = mysqli_query($conn, "SELECT * FROM vehicle_parts $where ORDER BY id DE
       <div class="col-md-6">
         <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
       </div>
-      <div class="col-md-6 text-right">
-        <a href="#" class="footer-link d-inline">Privacy Policy</a>
-        <a href="#" class="footer-link d-inline">Terms of Use</a>
-        <a href="#" class="footer-link d-inline">Sitemap</a>
+      <div class="col-md-6 text-md-right text-left">
+        <a href="https://example.com/privacy-policy" class="footer-link d-inline">Privacy Policy</a>
+        <a href="https://example.com/terms-of-use" class="footer-link d-inline ml-3">Terms of Use</a>
+        <a href="https://example.com/sitemap" class="footer-link d-inline ml-3">Sitemap</a>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- Footer Styles -->
+<style>
+/* Footer */
+footer {
+  background: #010205ff;
+  color: #ddd;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+footer h5 {
+  color: var(--brand-gold);
+  margin-bottom: 15px;
+}
+footer p,
+footer a {
+  color: #bbb;
+  font-size: 14px;
+}
+footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-link {
+  display: block;
+  margin-bottom: 5px;
+}
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
 </body>
 </html>
