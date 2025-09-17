@@ -42,8 +42,8 @@ $part = mysqli_fetch_assoc($result);
     .navbar-nav .nav-link.active { color: var(--brand-gold) !important; }
 
     .part-card {
-      background: #fff;
-      color: #000;
+      background: #11182E;
+      color: #ffffffff;
       border-radius: 12px;
       padding: 25px;
       margin-top: 90px;
@@ -51,77 +51,52 @@ $part = mysqli_fetch_assoc($result);
     }
     .btn-custom { border-radius: 8px; font-weight: 600; padding: 10px 18px; margin-right: 8px; }
     .btn-buy { background: #007bff; color: white; }
-    .btn-email { background: #6c757d; color: white; }
+    .btn-email { background: #657995ff; color: white; }
     .btn-whatsapp { background: #25D366; color: white; }
     #buyForm { display: none; margin-top: 20px; }
 
-    footer {
-      background: #101010;
-      padding: 30px 0;
-      color: #aaa;
-      margin-top: 40px;
-    }
-    footer h5 { color: var(--brand-gold); }
-    .footer-link {
-      display: block;
-      color: #bbb;
-      margin-bottom: 6px;
-      text-decoration: none;
-    }
-    .footer-link:hover { color: #fff; }
+ 
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  <a class="navbar-brand text-warning" href="/vinal_auto/index.php">Vinal Auto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="/vinal_auto/index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="/vinal_auto/vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link active" href="/vinal_auto/user_parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link" href="/vinal_auto/reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link" href="/vinal_auto/about.php">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="/vinal_auto/contact.php">Contact</a></li>
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="/vinal_auto/admin/login.php">Admin</a></li>
-    </ul>
-  </div>
-</nav>
-
+  <?php include 'a_nav.php'; ?>
 <!-- Part Details -->
 <div class="container">
   <div class="part-card">
     <h2><?= htmlspecialchars($part['part_name']) ?></h2>
 
-    <?php if ($part['image']): ?>
-      <img src="/vinal_auto/uploads/<?= htmlspecialchars($part['image']) ?>" class="img-fluid rounded mb-3" alt="Image of <?= htmlspecialchars($part['part_name']) ?>">
-    <?php else: ?>
-      <p><em>No image available.</em></p>
-    <?php endif; ?>
+    <?php
+    $image_path = "/vinal_auto/assets/uploads/" . htmlspecialchars($part['image']);
+    $full_path = $_SERVER['DOCUMENT_ROOT'] . $image_path;
+
+    if (!empty($part['image']) && file_exists($full_path)) {
+      echo "<img src='$image_path' class='img-fluid rounded mb-3' alt='Image of " . htmlspecialchars($part['part_name']) . "'>";
+    } else {
+      echo "<img src='/vinal_auto/assets/default.jpg' class='img-fluid rounded mb-3' alt='Default image'>";
+    }
+    ?>
 
     <div class="price">Rs. <?= number_format($part['price'], 2) ?></div>
     <p><strong>Description:</strong><br><?= nl2br(htmlspecialchars($part['description'])) ?></p>
     <p><strong>Stock:</strong> <?= ($part['stock'] > 0) ? "✅ Available ({$part['stock']} left)" : "❌ Out of Stock"; ?></p>
 
     <!-- Action Buttons -->
-    <a href="mailto:admin@example.com?subject=Buy Request for <?= urlencode($part['part_name']) ?>" class="btn btn-email btn-custom">📧 Email Admin</a>
-    <a href="https://wa.me/94712345678?text=Hello,%20I%20want%20to%20buy%20<?= urlencode($part['part_name']) ?>" target="_blank" class="btn btn-whatsapp btn-custom">💬 WhatsApp Admin</a>
-    <a href="#" class="btn btn-buy btn-custom" onclick="document.getElementById('buyForm').style.display='block'">🛒 Buy Now</a>
+    <a href="mailto:admin@example.com?subject=Buy Request for <?= urlencode($part['part_name']) ?>" class="btn btn-email btn-custom">Email Admin</a>
+    <a href="https://wa.me/94768291088?text=Hello,%20I%20want%20to%20buy%20<?= urlencode($part['part_name']) ?>" target="_blank" class="btn btn-whatsapp btn-custom">WhatsApp Admin</a>
+    <a href="#" class="btn btn-buy btn-custom" onclick="document.getElementById('buyForm').style.display='block'">Buy Now</a>
 
     <!-- Buy Form -->
     <div id="buyForm">
       <form method="POST" action="/vinal_auto/submit_order.php">
         <input type="hidden" name="part_id" value="<?= $part['id'] ?>">
         <div class="form-group">
-          <label>ඔබගේ නම</label>
+          <label>Name</label>
           <input type="text" name="name" class="form-control" required>
         </div>
         <div class="form-group">
-          <label>දුරකථන අංකය</label>
+          <label>Phone Number</label>
           <input type="text" name="phone" class="form-control" required>
         </div>
         <div class="form-group">
@@ -132,14 +107,16 @@ $part = mysqli_fetch_assoc($result);
       </form>
     </div>
 
-    <br><a href="/vinal_auto/user_parts.php" class="btn btn-secondary mt-3">← Back to Parts</a>
+    <br><a href="/vinal_auto/parts.php" class="btn btn-secondary mt-3">← Back to Parts</a>
   </div>
 </div>
 
 <!-- Footer -->
+
 <footer>
   <div class="container">
     <div class="row">
+      <!-- Contact -->
       <div class="col-md-4 mb-4">
         <h5>Contact Us</h5>
         <p>
@@ -148,23 +125,39 @@ $part = mysqli_fetch_assoc($result);
           Email: info@vinalauto.lk
         </p>
       </div>
+
+      <!-- Quick Links -->
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
-        <a href="/vinal_auto/index.php" class="footer-link">Home</a>
-        <a href="/vinal_auto/vehicles.php" class="footer-link">Vehicles</a>
-        <a href="/vinal_auto/about.php" class="footer-link">About</a>
-        <a href="/vinal_auto/contact.php" class="footer-link">Contact</a>
+        <a href="index.php" class="footer-link">Home</a>
+        <a href="vehicles.php" class="footer-link">Vehicles</a>
+        <a href="parts.php" class="footer-link">Parts</a>
+        <a href="book-test-drive.php" class="footer-link">Booking</a>
+        <a href="reviews.php" class="footer-link">Reviews</a>
+        <a href="about.php" class="footer-link">About</a>
+        <a href="contact.php" class="footer-link">Contact</a>
       </div>
+
+      <!-- Newsletter -->
       <div class="col-md-4 mb-4">
         <h5>Newsletter</h5>
         <p>Get the latest deals straight to your inbox.</p>
-        <form>
+        <form id="newsletterForm" method="POST">
           <div class="input-group">
-            <input type="email" class="form-control" placeholder="Your email" required>
+            <input type="email"
+                   name="newsletter_email"
+                   class="form-control"
+                   placeholder="Your email"
+                   required>
             <div class="input-group-append">
               <button class="btn btn-warning" type="submit">Subscribe</button>
             </div>
           </div>
+          <?php if (!empty($newsletter_msg)): ?>
+            <small class="form-text text-light mt-2">
+              <?= htmlspecialchars($newsletter_msg) ?>
+            </small>
+          <?php endif; ?>
         </form>
       </div>
     </div>
@@ -173,4 +166,47 @@ $part = mysqli_fetch_assoc($result);
 
     <div class="row">
       <div class="col-md-6">
-        <p class="mb-0">&copy; <?= date('Y'); ?> Vinal Auto Traders. All
+        <p class="mb-0">&copy; <?php echo date('Y'); ?> Vinal Auto Traders. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-md-right text-left">
+        <a href="https://example.com/privacy-policy" class="footer-link d-inline">Privacy Policy</a>
+        <a href="https://example.com/terms-of-use" class="footer-link d-inline ml-3">Terms of Use</a>
+        <a href="https://example.com/sitemap" class="footer-link d-inline ml-3">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Footer Styles -->
+<style>
+/* Footer */
+footer {
+  background: #010205ff;
+  color: #ddd;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+footer h5 {
+  color: var(--brand-gold);
+  margin-bottom: 15px;
+}
+footer p,
+footer a {
+  color: #bbb;
+  font-size: 14px;
+}
+footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-link {
+  display: block;
+  margin-bottom: 5px;
+}
+</style>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

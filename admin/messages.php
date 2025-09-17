@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__.'/../db.php';
 require_login();
 
-// 🔐 Only allow admin access
+// 🔐 Admin access only
 if ($_SESSION['role'] !== 'admin') {
   echo '<div style="padding:20px;color:red;">Access denied. Admins only.</div>';
   exit;
@@ -17,13 +17,31 @@ if ($_SESSION['role'] !== 'admin') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
-    body { font-family: 'Poppins', sans-serif; background: #0b1e3f; color: #fff; }
-    .container { max-width: 1000px; margin: 40px auto; padding: 20px; background: #11182e; border-radius: 10px; }
-    h2 { color: #ffd700; margin-bottom: 20px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
-    th, td { padding: 12px; border-bottom: 1px solid #444; text-align: left; }
-    th { background-color: #0b1e3f; color: #ffd700; }
-    td { background-color: #1a233a; }
+     .btn-edit {
+      background-color: #007bff;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .btn-edit:hover, .btn-delete:hover {
+      opacity: 0.85;
+    }
+    .actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    table img {
+      border-radius: 4px;
+    }
     .btn { padding: 6px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-right: 5px; }
     .btn-view { background: #ffd700; color: #0b1e3f; }
     .btn-reply { background: #00c853; color: #fff; }
@@ -33,10 +51,28 @@ if ($_SESSION['role'] !== 'admin') {
 </head>
 <body>
   <div class="container">
-    <a href="dashboard.php" class="btn-dashboard">← Go to Dashboard</a>
+    <header class="flex-between">
+      <h2>Manage Vehicles</h2>
+      <div>
+        Welcome, <?= e($_SESSION['username'] ?? '') ?> |
+        <a class="btn" href="dashboard.php">Back to Dashboard</a> |
+        <a class="btn" href="logout.php">Logout</a>
+      </div>
+    </header>
 
-    <!-- 📬 Contact Messages -->
-    <h2>📬 Contact Messages</h2>
+    <nav class="nav-links">
+        <a href="vehicles.php">Vehicles</a>
+        <a href="parts.php">Parts</a>
+        <a href="part_messages.php">Orders</a>
+        <a href="users.php">Users</a>
+        <a href="messages.php" class="active">Messages</a>
+        <a href="reviews.php">Reviews</a>
+        <a href="bookings.php">Test Drives</a>
+        <a href="compare_add.php">Compare</a>
+    </nav>
+
+    <!-- Contact Messages -->
+    <h2> Contact Messages</h2>
     <table>
       <thead>
         <tr>
@@ -58,7 +94,7 @@ if ($_SESSION['role'] !== 'admin') {
           echo '<td>'.(int)$row['id'].'</td>';
           echo '<td>'.htmlspecialchars($row['name']).'</td>';
           echo '<td>'.htmlspecialchars($row['email']).'</td>';
-          echo '<td>'.substr(htmlspecialchars($row['message']), 0, 40).'...</td>';
+          echo '<td title="'.htmlspecialchars($row['message']).'">'.substr(htmlspecialchars($row['message']), 0, 40).'...</td>';
           echo '<td>'.htmlspecialchars($row['created_at']).'</td>';
           echo '<td>'.htmlspecialchars($row['status'] ?? 'Pending').'</td>';
           echo '<td>'.($row['reply'] ? substr(htmlspecialchars($row['reply']), 0, 40).'...' : '<em>No reply</em>').'</td>';
@@ -73,8 +109,8 @@ if ($_SESSION['role'] !== 'admin') {
       </tbody>
     </table>
 
-    <!-- 🛠️ Part Requests -->
-    <h2>🛠️ Part Requests</h2>
+    <!--  Part Requests -->
+    <h2> Part Requests</h2>
     <table>
       <thead>
         <tr>
@@ -105,7 +141,7 @@ if ($_SESSION['role'] !== 'admin') {
           echo '<td>'.htmlspecialchars($row['order_code']).'</td>';
           echo '<td>'.htmlspecialchars($row['customer_name']).'</td>';
           echo '<td>'.htmlspecialchars($row['phone']).'</td>';
-          echo '<td>'.substr(htmlspecialchars($row['message']), 0, 40).'...</td>';
+          echo '<td title="'.htmlspecialchars($row['message']).'">'.substr(htmlspecialchars($row['message']), 0, 40).'...</td>';
           echo '<td>'.htmlspecialchars($row['created_at']).'</td>';
           echo '<td>'.htmlspecialchars($row['status'] ?? 'Pending').'</td>';
           echo '<td>'.($row['reply'] ? substr(htmlspecialchars($row['reply']), 0, 40).'...' : '<em>No reply</em>').'</td>';

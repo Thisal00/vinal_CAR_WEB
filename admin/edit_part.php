@@ -1,7 +1,8 @@
 <?php
-include '../db.php';
+require_once __DIR__.'/../db.php';
+require_login();
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $result = mysqli_query($conn, "SELECT * FROM vehicle_parts WHERE id = $id");
 $part = mysqli_fetch_assoc($result);
 
@@ -11,73 +12,94 @@ if (!$part) {
 }
 
 // Fetch categories
-$categories = mysqli_query($conn, "SELECT id, name FROM categories");
+$categories = mysqli_query($conn, "SELECT id, category_name FROM categories");
 
-// Update logic
-if (isset($_POST['update'])) {
-  $name = mysqli_real_escape_string($conn, $_POST['name']);
-  $category_id = intval($_POST['category']);
-  $price = floatval($_POST['price']);
-  $stock = intval($_POST['stock']);
-  $description = mysqli_real_escape_string($conn, $_POST['description']);
-  $image = $part['image'];
+$msg = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $name = trim($_POST['name'] ?? '');
+  $category_id = (int)($_POST['category'] ?? 0);
+  $price = (float)($_POST['price'] ?? 0);
+  $stock = (int)($_POST['stock'] ?? 0);
+  $description = trim($_POST['description'] ?? '');
+  $image = $part['image'] ?? '';
 
   if (!empty($_FILES['image']['name'])) {
-    $target_dir = "../uploads/";
-    $unique_name = time() . "_" . basename($_FILES["image"]["name"]);
-    $target_file = $target_dir . $unique_name;
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-      $image = $unique_name;
+    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+    if (in_array($ext, ['jpg','jpeg','png','gif','webp'])) {
+      $image = uniqid('part_', true).'.'.$ext;
+      move_uploaded_file($_FILES['image']['tmp_name'], __DIR__.'/../uploads/'.$image);
+    } else {
+      $msg = 'Invalid image type.';
     }
   }
 
-  $sql = "UPDATE vehicle_parts SET 
-            part_name = '$name',
-            category_id = '$category_id',
-            price = '$price',
-            stock = '$stock',
-            image = '$image',
-            description = '$description'
-          WHERE id = $id";
-  mysqli_query($conn, $sql);
-  header("Location: parts.php");
-  exit;
+  if (!$msg && $name && $category_id) {
+    $sql = "UPDATE vehicle_parts SET 
+              part_name = ?, category_id = ?, price = ?, stock = ?, image = ?, description = ?
+            WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('sidissi', $name, $category_id, $price, $stock, $image, $description, $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: parts.php");
+    exit;
+  } else if (!$msg) {
+    $msg = 'Required: Part name and category.';
+  }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Edit Part</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input, textarea, select { margin: 5px; padding: 8px; width: 300px; }
-    .btn { padding: 6px 12px; background: green; color: white; border: none; cursor: pointer; }
-    img { margin-top: 10px; max-width: 100px; }
-  </style>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Part - Vinal Auto</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+  <div class="container">
+    <header style="display:flex;justify-content:space-between;align-items:center">
+      <h2>Edit Vehicle Part</h2>
+      <div><a class="btn" href="parts.php">Back</a></div>
+    </header>
 
-<h2>Edit Part</h2>
-<form method="POST" enctype="multipart/form-data">
-  <input type="text" name="name" value="<?= htmlspecialchars($part['part_name']) ?>" required><br>
+    <?php if ($msg) echo '<div class="alert">'.htmlspecialchars($msg).'</div>'; ?>
 
-  <select name="category" required>
-    <?php while ($cat = mysqli_fetch_assoc($categories)) {
-      $selected = ($cat['id'] == $part['category_id']) ? 'selected' : '';
-      echo "<option value='{$cat['id']}' $selected>{$cat['name']}</option>";
-    } ?>
-  </select><br>
+    <form method="POST" enctype="multipart/form-data" class="card form">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">
+        <input name="name" placeholder="Part Name" value="<?= htmlspecialchars($part['part_name']) ?>" required>
+        <select name="category" required>
+          <?php while ($cat = mysqli_fetch_assoc($categories)) {
+            $selected = ($cat['id'] == $part['category_id']) ? 'selected' : '';
+            $cat_name = $cat['category_name'] ?? 'Unnamed Category';
+            echo "<option value='{$cat['id']}' $selected>".htmlspecialchars($cat_name)."</option>";
+          } ?>
+        </select>
+        <input type="number" step="0.01" name="price" placeholder="Price (LKR)" value="<?= htmlspecialchars($part['price']) ?>">
+        <input type="number" name="stock" placeholder="Stock Quantity" value="<?= htmlspecialchars($part['stock']) ?>">
+      </div>
 
-  <input type="number" name="price" value="<?= $part['price'] ?>" required><br>
-  <input type="number" name="stock" value="<?= $part['stock'] ?>"><br>
-  <input type="file" name="image"><br>
-  <?php if ($part['image']) {
-    echo "<img src='../uploads/" . htmlspecialchars($part['image']) . "'>";
-  } ?>
-  <textarea name="description"><?= htmlspecialchars($part['description']) ?></textarea><br>
-  <button type="submit" name="update" class="btn">Update Part</button>
-</form>
+      <textarea name="description" placeholder="Description"><?= htmlspecialchars($part['description']) ?></textarea>
 
+      <div>
+        <?php if (!empty($part['image'])) echo '<img style="max-width:180px" src="../uploads/'.htmlspecialchars($part['image']).'">'; ?>
+      </div>
+
+      <input type="file" name="image" accept="image/*" onchange="previewImage(event)">
+      <img id="preview" style="max-width:180px;margin-top:10px">
+
+      <button type="submit" name="update" class="btn">Save Changes</button>
+    </form>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        document.getElementById('preview').src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
 </body>
 </html>

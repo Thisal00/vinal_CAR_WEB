@@ -245,3 +245,95 @@ th {
   from { transform: translateY(-100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+/*booking part */
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.filter-form {
+  margin-bottom: 20px;
+}
+
+.filter-form input,
+.filter-form select {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+
+.chatbot-box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 320px;
+  background-color: #1f3b6e;
+  padding: 20px;
+  border-radius: 10px 0 0 0;
+  display: none;
+  z-index: 999;
+}
+
+.chatbot-box input {
+  width: 70%;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+.chatbot-box button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.chat-options button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  background-color: #0b1e3f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.chat-tab {
+  position: fixed;
+  right: 0;
+  top: 40%;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
+  writing-mode: vertical-rl;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1000;
+}

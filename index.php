@@ -33,11 +33,7 @@
     }
     h1, h2, h3, h5 { color: var(--brand-gold); font-weight: 700; }
 
-    /* Navbar (unchanged theme) */
-    .navbar { background: rgba(0,0,0,0.7); }
-    .navbar-nav .nav-link { color: #fff !important; font-weight: 500; }
-    .navbar-nav .nav-link:hover { color: var(--brand-gold) !important; }
-
+    
     /* Hero: video directly under navbar */
     .hero-section {
       position: relative;
@@ -199,29 +195,124 @@
 
     /* Footer */
     footer { background: #101010; padding: 30px 0; color: #aaa; margin-top: 40px; }
+
+
+    body {
+  background-color: #0b1e3f;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.chat-tab {
+  position: fixed;
+  right: 0;
+  top: 40%;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border-radius: 8px 0 0 8px;
+  writing-mode: vertical-rl;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.chatbot-box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 340px;
+  background-color: #1f3b6e;
+  border-radius: 12px 0 0 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  display: none;
+  z-index: 999;
+}
+
+.chat-header {
+  background-color: #007bff;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 12px 0 0 0;
+}
+
+.chat-body {
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #0b1e3f;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background-color: #1f3b6e;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.chat-input button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.chat-buttons {
+  padding: 10px;
+  background-color: #1f3b6e;
+}
+
+.chat-buttons button {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  background-color: #0b1e3f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.user-msg, .bot-msg {
+  margin: 6px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.user-msg {
+  background-color: #007bff;
+  align-self: flex-end;
+  color: white;
+  text-align: right;
+}
+
+.bot-msg {
+  background-color: #444;
+  align-self: flex-start;
+  color: white;
+}
   </style>
 </head>
 <body>
-
-  <!-- Navbar (unchanged) -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <a class="navbar-brand text-warning" href="#">Vinal Auto</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="vehicles.php">Vehicles</a></li>
-      <li class="nav-item"><a class="nav-link" href="parts.php">Parts</a></li>
-      <li class="nav-item"><a class="nav-link" href="reviews.php">Reviews</a></li>
-      <li class="nav-item"><a class="nav-link " href="about.php">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-      
-      <li class="nav-item"><a class="btn btn-warning ms-2" href="admin/login.php">Admin</a></li>
-    </ul>
-    </div>
-  </nav>
+<!-- Navbar -->
+  <?php include 'a_nav.php'; ?>
 
   <!-- HERO: Video directly under navbar -->
   <header class="hero-section">
@@ -297,6 +388,7 @@
         </p>
       </div>
     </section>
+    
 
     <!-- Banner -->
     <section class="section pt-0">
@@ -369,41 +461,119 @@
       </div>
     </section>
 
-    <!-- Banks ticker -->
+    <!-- Banks  -->
 <section class="section pt-2 pb-0">
   <div class="container">
     <div class="scroll-panel">
       <div class="scroll-track">
         <div class="scroll-item">
-          <img src="images/sey.png" alt="Seylan" class="bank-logo"> Seylan
+          <img src="assets/images/sey.png" alt="Seylan" class="bank-logo"> Seylan
         </div>
         <div class="scroll-item">
-          <img src="images/hnbl.png" alt="HNB" class="bank-logo"> HNB
+          <img src="assets/images/hnbl.png" alt="HNB" class="bank-logo"> HNB
         </div>
         <div class="scroll-item">
-          <img src="images/lbf.png" alt="LB Finance" class="bank-logo"> LB Finance
+          <img src="assets/images/lbf.png" alt="LB Finance" class="bank-logo"> LB Finance
         </div>
         <div class="scroll-item">
-          <img src="images/siy.png" alt="Siyapatha" class="bank-logo"> Siyapatha
-        </div>
-        <!-- Repeat for seamless effect -->
-        <div class="scroll-item">
-          <img src="images/sey.png" alt="Seylan" class="bank-logo"> Seylan
+          <img src="assets/images/siy.png" alt="Siyapatha" class="bank-logo"> Siyapatha
         </div>
         <div class="scroll-item">
-          <img src="images/hnbl.png" alt="HNB" class="bank-logo"> HNB
+          <img src="assets/images/BOC.jpeg" alt="nsb" class="bank-logo"> NSB
         </div>
         <div class="scroll-item">
-          <img src="images/lbf.png" alt="LB Finance" class="bank-logo"> LB Finance
+          <img src="assets/images/BOC.jpg" alt="BOC" class="bank-logo"> BOC
+        </div>
+        <!-- Re -->
+        <div class="scroll-item">
+          <img src="assets/images/sey.png" alt="Seylan" class="bank-logo"> Seylan
         </div>
         <div class="scroll-item">
-          <img src="images/siy.png" alt="Siyapatha" class="bank-logo"> Siyapatha
+          <img src="assets/images/hnbl.png" alt="HNB" class="bank-logo"> HNB
         </div>
+        <div class="scroll-item">
+          <img src="assets/images/lbf.png" alt="LB Finance" class="bank-logo"> LB Finance
+        </div>
+        <div class="scroll-item">
+          <img src="assets/images/siy.png" alt="Siyapatha" class="bank-logo"> Siyapatha
+        </div>
+        <div class="scroll-item">
+          <img src="assets/images/BOC.jpeg" alt="nsb" class="bank-logo"> NSB
+        </div>
+        <div class="scroll-item">
+          <img src="assets/images/BOC.jpg" alt="BOC" class="bank-logo"> BOC
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="chat-tab" onclick="toggleChat()">💬 Chat</div>
+
+<!-- Chatbot Panel -->
+<!-- Chatbot Panel -->
+<div class="chatbot-box" id="chatBox" style="display:none;">
+  <div class="chat-header">🚗 Vehicle Assistant</div>
+  <div class="chat-body" id="chatBody">
+    <div class="bot-msg">👋 Welcome! Please choose:
+      <br>1️⃣ Vehicles
+      <br>2️⃣ Financial
+      <br>3️⃣ Add Salary (estimate)
+      <br>4️⃣ Contact Us
+      <br>5️⃣ Brand New Car Booking
+      <br><br>👉 Type a number (or 00 to go back anytime)</div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type here... e.g. 1, 2, 3">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <!-- Quick Action Buttons -->
+  <div class="chat-buttons">
+    <button onclick="location.href='compare_view.php'">⚖️ Compare Vehicles</button>
+    <button onclick="window.location.href='tel:+94768291088'">📞 Call Us Now</button>
+    <button onclick="location.href='book-test-drive.php'">🚘 Book a Test Drive</button>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const box = document.getElementById("chatBox");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const chatBody = document.getElementById("chatBody");
+  const message = input.value.trim();
+  if (!message) return;
+
+  // Show user message
+  const userMsg = document.createElement("div");
+  userMsg.className = "user-msg";
+  userMsg.textContent = message;
+  chatBody.appendChild(userMsg);
+
+  // Send to chatbot_logic.php
+  fetch("chatbot_logic.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "query=" + encodeURIComponent(message)
+  })
+  .then(res => res.text())
+  .then(data => {
+    const botMsg = document.createElement("div");
+    botMsg.className = "bot-msg";
+    botMsg.textContent = data;
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  });
+
+  input.value = "";
+}
+</script>
+
 
 <style>
 .scroll-panel {
@@ -457,10 +627,10 @@
         <div class="slider-container">
           <button class="slide-arrow left" aria-label="Previous">&#8249;</button>
           <div class="vehicle-slider" id="vehicleSlider">
-            <img src="assets/images/vehicle1.jpg" alt="Vehicle 1" loading="lazy">
-            <img src="assets/images/vehicle2.jpg" alt="Vehicle 2" loading="lazy">
-            <img src="assets/images/vehicle3.jpg" alt="Vehicle 3" loading="lazy">
-            <img src="assets/images/vehicle4.jpg" alt="Vehicle 4" loading="lazy">
+            <img src="assets/images/Vehicle 1.jpg" alt="Vehicle 1" loading="lazy">
+            <img src="assets/images/Vehicle 2.jpg" alt="Vehicle 2" loading="lazy">
+            <img src="assets/images/Vehicle 3.webp" alt="Vehicle 3" loading="lazy">
+            <img src="assets/images/Vehicle 4.webp" alt="Vehicle 4" loading="lazy">
           </div>
           <button class="slide-arrow right" aria-label="Next">&#8250;</button>
         </div>
@@ -507,12 +677,13 @@
   </main>
 
   <!-- WhatsApp -->
-  <a href="https://wa.me/94771234567" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <a href="https://wa.me/94768291088" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
+    <span>Chat with us</span>
   </a>
 
   <!-- Footer -->
-  <!-- Footer -->
+ 
   <footer>
     <div class="container">
       <div class="row">
@@ -528,11 +699,13 @@
         <!-- Quick Links -->
         <div class="col-md-4 mb-4">
           <h5>Quick Links</h5>
-          <a href="#" class="footer-link">Home</a>
+          <a href="index.php" class="footer-link">Home</a>
           <a href="vehicles.php" class="footer-link">Vehicles</a>
-          <a href="#" class="footer-link">About</a>
-          <a href="#" class="footer-link">Services</a>
-          <a href="#" class="footer-link">Contact</a>
+          <a href="parts.php" class="footer-link">Parts</a>
+          <a href="book-test-drive.php" class="footer-link">Booking</a>
+          <a href="reviews.php" class="footer-link">Reviews</a>
+          <a href="about.php" class="footer-link">About</a>
+          <a href="contact.php" class="footer-link">Contact</a>
         </div>
         <!-- Newsletter -->
         <div class="col-md-4 mb-4">
@@ -612,5 +785,6 @@
       rightBtn.addEventListener('click', () => slider.scrollBy({ left: 320, behavior: 'smooth' }));
     }
   </script>
+  
 </body>
 </html>
