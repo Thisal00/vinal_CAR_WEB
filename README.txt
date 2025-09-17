@@ -1,20 +1,6 @@
-Vinal Auto – Quick Setup (EN + සිංහල)
+over Group Name is AZ
+Note :
 
-[EN]
-1) Import DB:
-   - Open phpMyAdmin -> Create DB 'vinal_auto' (utf8mb4).
-   - Open sql/create_tables.sql -> Run.
-2) Configure DB connection: edit db.php if your MySQL credentials differ.
-3) Admin:
-   - If you don't have an admin creator yet, insert one manually into users with role='admin'.
-4) Run:
-   - http://localhost/vinal_auto/index.php
-
-[සිංහල]
-1) Database import karanna:
-   - phpMyAdmin -> 'vinal_auto' DB eka hadanna (utf8mb4).
-   - 'sql/create_tables.sql' file eka run karanna.
-2) DB sambandhaya set karanna: db.php file eke credentials tika wenas karanna oni nam wenas karanna.
-3) Admin ekak nathnam users table eke ekak danna (role='admin').
-4) Run karanna:
-   - http://localhost/vinal_auto/index.php
+I realized that I forgot to include a member in the web report. Please note the details below:
+Student ID: 36059
+Name: W.T.N Alwis
