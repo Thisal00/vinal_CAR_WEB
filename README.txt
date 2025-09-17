@@ -1,4 +1,4 @@
-Vinal Auto – Quick Setup (EN + සිංහල)
+Vinal Auto – Quick Setup (EN)
 
 [EN]
 1) Import DB:
