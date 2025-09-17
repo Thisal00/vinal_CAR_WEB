@@ -15,4 +15,4 @@ Note :
 
 I realized that I forgot to include a member in the web report. Please note the details below:
 Student ID: 36059
-Name: W.T.N Alwis
+Name: W.N.T Alwis
