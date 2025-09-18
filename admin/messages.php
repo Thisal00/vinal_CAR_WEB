@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__.'/../db.php';
 require_login();
 
-// 🔐 Admin access only
+//  Admin access only
 if ($_SESSION['role'] !== 'admin') {
   echo '<div style="padding:20px;color:red;">Access denied. Admins only.</div>';
   exit;
@@ -159,4 +159,5 @@ if ($_SESSION['role'] !== 'admin') {
     </table>
   </div>
 </body>
+
 </html>
