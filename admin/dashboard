@@ -1,12 +1,12 @@
 <?php
-// ✅ Start session only if not already active
+// Start session only if not already active
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 require_once __DIR__ . '/../db.php';
 
-// ✅ Escape helper if not already declared
+// Escape helper if not already declared
 if (!function_exists('e')) {
     function e($str) {
         return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
