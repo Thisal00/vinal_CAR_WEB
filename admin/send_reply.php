@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($to_email && $reply) {
         ?>
-        <!-- ✅ Hidden FormSubmit form -->
+        <!--  Hidden FormSubmit form -->
         <form id="formsubmit" action="https://formsubmit.co/thisalchathnuka@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="Reply from Vinal Auto">
             <input type="hidden" name="_replyto" value="<?php echo htmlspecialchars($to_email); ?>">
@@ -32,3 +32,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
