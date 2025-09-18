@@ -3,13 +3,13 @@ session_start();
 require_once __DIR__.'/../db.php';
 require_login();
 
-// 🔐 Only allow admin access
+// Only allow admin access
 if ($_SESSION['role'] !== 'admin') {
   echo '<div style="padding:20px;color:red;">Access denied. Admins only.</div>';
   exit;
 }
 
-// 🧾 Fetch message data
+// Fetch message data
 $id = $_GET['id'] ?? 0;
 $stmt = $mysqli->prepare("SELECT m.*, p.name AS part_name FROM part_messages m LEFT JOIN vehicle_parts p ON m.part_id = p.id WHERE m.id = ?");
 $stmt->bind_param("i", $id);
@@ -22,7 +22,7 @@ if (!$data) {
   exit;
 }
 
-// ✅ Handle reply submission
+// Handle reply submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $phone  = trim($_POST['phone'] ?? '');
   $reply  = trim($_POST['reply'] ?? '');
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if ($phone === '' || $reply === '') {
     $feedback = '<div style="padding:20px;color:red;">Phone or reply is missing.</div>';
   } else {
-    // ✉️ Optional email reply
+    // ✉Optional email reply
     if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $subject = "Reply to your part request";
       $headers = "From: vinalauto@example.com\r\n";
@@ -40,19 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       mail($email, $subject, $reply, $headers);
     }
 
-    // 💾 Save reply and status
+    //  Save reply and status
     $stmt = $mysqli->prepare("UPDATE part_messages SET reply = ?, status = ? WHERE id = ?");
     $stmt->bind_param("ssi", $reply, $status, $id);
     $stmt->execute();
     $stmt->close();
 
-    // 📲 WhatsApp link
+    //  WhatsApp link
     $clean_phone = '94' . ltrim($phone, '0');
     $customer_name = htmlspecialchars($data['customer_name'] ?? 'Customer');
     $whatsapp_message = urlencode("Hello $customer_name, your part request has been replied:\n\n$reply");
     $whatsapp_link = "https://wa.me/$clean_phone?text=$whatsapp_message";
 
-    // ✅ Feedback
+    //  Feedback
     $feedback = '<div style="padding:20px;color:limegreen;">Reply saved for '. $customer_name .'</div>';
     $feedback .= '<div style="margin-top:10px;">
       <a href="'. $whatsapp_link .'" target="_blank" style="color:#25D366;font-weight:bold;">
@@ -108,4 +108,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
   </div>
 </body>
+
 </html>
